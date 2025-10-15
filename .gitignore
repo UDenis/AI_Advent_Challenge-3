@@ -1,0 +1,19 @@
+.kotlin/
+.gradle/
+*/.gradle/
+build/
+*/build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+*/local.properties
+
+# Log Files
+*.log
+.env
+*/.env
+
+# IntelliJ
+*.iml
+.idea/
+.DS_Store
