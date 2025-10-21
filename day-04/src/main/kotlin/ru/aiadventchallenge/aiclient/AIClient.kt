@@ -27,10 +27,12 @@ class AIClient(
     fun createChatCompletion(
         model: String,
         temperature: Float,
+        topP: Float,
         messages: List<ChatMessage>
     ): ai.z.openapi.service.model.ChatCompletionResponse {
         val request = ChatCompletionCreateParams.builder()
             .temperature(temperature)
+            .topP(topP)
             .model(model)
             .messages(Arrays.asList(*messages.toTypedArray()))
             .build()

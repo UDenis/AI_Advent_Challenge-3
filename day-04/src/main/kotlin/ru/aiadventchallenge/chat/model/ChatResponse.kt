@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ChatResponse(
     val message: String,
-    val userTempereture: Float,
+    val usedTempereture: Float,
+    val usedTopP: Float,
 )

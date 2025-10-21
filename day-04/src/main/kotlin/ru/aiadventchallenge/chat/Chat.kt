@@ -92,12 +92,17 @@ class Chat(
      * Отправляет сообщение пользователя и получает ответ от AI
      * @return Ответ от AI
      */
-    fun singleQuestion(temperature: Float = 1f, userInput: String): ChatResponse {
+    fun singleQuestion(
+        temperature: Float = 1f,
+        userInput: String,
+        topP: Float = temperature
+    ): ChatResponse {
         // Добавляем сообщение пользователя в историю
         print("t=$temperature. AI печатает ....")
         val response = zaiService.createChatCompletion(
             model = model,
             temperature = temperature,
+            topP = topP,
             messages = listOf(
                 createUserMessage(userInput)
             )
@@ -108,17 +113,23 @@ class Chat(
             throw AIResponseException()
         }
         val reply = response.data.choices[0].message.content.toString()
-        return ChatResponse(reply, temperature)
+        return ChatResponse(
+            message = reply,
+            usedTempereture = temperature,
+            usedTopP = topP
+        )
     }
 
     private fun callAI(): ChatResponse {
         print("AI печатает ....")
         // Отправляем запрос
-        val temperature =  1f
+        val temperature = 0.7f
+        val topP = 0.7f
         val response = zaiService.createChatCompletion(
             model = model,
             messages = messages,
             temperature = temperature,
+            topP = topP,
         )
         print("\r${" ".repeat(50)}\r")
         System.out.flush()
@@ -128,7 +139,11 @@ class Chat(
         // Обрабатываем ответ
         val reply = response.data.choices[0].message.content.toString()
         messages.add(createAssistantMessage(reply))
-        return ChatResponse(reply, temperature)
+        return ChatResponse(
+            message = reply,
+            usedTempereture = temperature,
+            usedTopP = topP
+        )
     }
 
     /**

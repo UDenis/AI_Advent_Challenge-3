@@ -1,5 +1,6 @@
 package ru.aiadventchallenge
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import ru.aiadventchallenge.aiclient.AIClient
 import ru.aiadventchallenge.chat.Chat
@@ -25,15 +26,18 @@ fun main(): Unit = runBlocking {
 //        }
 
 
-        val temperature = arrayOf(0f, .2f, .5f, .7f, .9f, 1f)
+        val temperature = arrayOf(0f, .3f, .7f, 1f)
+        //val topP = arrayOf(1f, .7f, .3f, 0f)
         for (t in temperature) {
             val reply = chat.singleQuestion(
                 temperature = t,
                 userInput = userInput,
+                topP = t,
             )
             printChatResponse(reply)
             print("\n")
             print("\n")
+            delay(10_000)
         }
         println("До свидания! Приходите ещё")
     } catch (ex: AIResponseException) {
@@ -42,7 +46,7 @@ fun main(): Unit = runBlocking {
 }
 
 private fun printChatResponse(reply: ChatResponse) {
-    println("AI (t=${reply.userTempereture}: ${reply.message}")
+    println("AI (t=${reply.usedTempereture}, topP=${reply.usedTopP}) : ${reply.message}")
 }
 
 /**
