@@ -20,17 +20,17 @@ class LlmComparisonService(
      */
     suspend fun compareResponses(prompt: String): List<LlmComparisonResult> {
         return coroutineScope {
-            // Запускаем запросы параллельно
-            val zAiDeferred = async {
-                measureTimedValue { zAiService.generateResponse(prompt) }
-                    .let {
-                        LlmComparisonResult(
-                            service = "Z.ai",
-                            result = it.value,
-                            executionTimeMs = it.duration.inWholeMilliseconds
-                        )
-                    }
-            }
+//            // Запускаем запросы параллельно
+//            val zAiDeferred = async {
+//                measureTimedValue { zAiService.generateResponse(prompt) }
+//                    .let {
+//                        LlmComparisonResult(
+//                            service = "Z.ai",
+//                            result = it.value,
+//                            executionTimeMs = it.duration.inWholeMilliseconds
+//                        )
+//                    }
+//            }
             val deepSeekDeferred = async {
                 measureTimedValue { deepSeekService.generateResponse(prompt) }
                     .let {
@@ -62,7 +62,7 @@ class LlmComparisonService(
                         )
                     }
             } + listOf(
-                zAiDeferred.await(),
+                //zAiDeferred.await(),
                 deepSeekDeferred.await(),
             )
         }
