@@ -1,0 +1,41 @@
+# Gradle
+.gradle/
+gradle/
+*.gradle
+gradlew
+gradlew.bat
+
+# Build output
+build/
+!build/libs/*.jar
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Git
+.git/
+.gitignore
+
+# Other modules
+agent/
+
+# Documentation
+README.md
+*.md
+
